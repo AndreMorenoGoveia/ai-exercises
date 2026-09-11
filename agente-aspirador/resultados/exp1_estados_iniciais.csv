@@ -1,0 +1,37 @@
+estado_inicial,agente,desempenho,t_limpo,movimentos,sugadas,sugadas_uteis,ociosas,desperdicio
+A=Dirty B=Dirty início=A,Reflexo simples,-978,3,998,2,2,0,997
+A=Dirty B=Dirty início=A,Tabela,19,3,1,2,2,997,0
+A=Dirty B=Dirty início=A,Baseado modelo,19,3,1,2,2,997,0
+A=Dirty B=Dirty início=A,Aleatório,-478.1,13.97,498.1,251.43,2,250.47,491.33
+A=Dirty B=Dirty início=B,Reflexo simples,-978,3,998,2,2,0,997
+A=Dirty B=Dirty início=B,Tabela,19,3,1,2,2,997,0
+A=Dirty B=Dirty início=B,Baseado modelo,19,3,1,2,2,997,0
+A=Dirty B=Dirty início=B,Aleatório,-478.1,13.37,498.1,251.43,2,250.47,491.53
+A=Dirty B=Clean início=A,Reflexo simples,-989,1,999,1,1,0,999
+A=Dirty B=Clean início=A,Tabela,9,1,1,1,1,998,1
+A=Dirty B=Clean início=A,Baseado modelo,9,1,1,1,1,998,1
+A=Dirty B=Clean início=A,Aleatório,-488.1,3.7,498.1,251.43,1,250.47,496.67
+A=Dirty B=Clean início=B,Reflexo simples,-989,2,999,1,1,0,998
+A=Dirty B=Clean início=B,Tabela,9,2,1,1,1,998,0
+A=Dirty B=Clean início=B,Baseado modelo,9,2,1,1,1,998,0
+A=Dirty B=Clean início=B,Aleatório,-488.1,8.733,498.1,251.43,1,250.47,493.73
+A=Clean B=Dirty início=A,Reflexo simples,-989,2,999,1,1,0,998
+A=Clean B=Dirty início=A,Tabela,9,2,1,1,1,998,0
+A=Clean B=Dirty início=A,Baseado modelo,9,2,1,1,1,998,0
+A=Clean B=Dirty início=A,Aleatório,-488.1,13,498.1,251.43,1,250.47,491.77
+A=Clean B=Dirty início=B,Reflexo simples,-989,1,999,1,1,0,999
+A=Clean B=Dirty início=B,Tabela,9,1,1,1,1,998,1
+A=Clean B=Dirty início=B,Baseado modelo,9,1,1,1,1,998,1
+A=Clean B=Dirty início=B,Aleatório,-488.1,7.367,498.1,251.43,1,250.47,494.9
+A=Clean B=Clean início=A,Reflexo simples,-1000,0,1000,0,0,0,1000
+A=Clean B=Clean início=A,Tabela,-1,0,1,0,0,999,1
+A=Clean B=Clean início=A,Baseado modelo,-1,0,1,0,0,999,1
+A=Clean B=Clean início=A,Aleatório,-498.1,0,498.1,251.43,0,250.47,498.1
+A=Clean B=Clean início=B,Reflexo simples,-1000,0,1000,0,0,0,1000
+A=Clean B=Clean início=B,Tabela,-1,0,1,0,0,999,1
+A=Clean B=Clean início=B,Baseado modelo,-1,0,1,0,0,999,1
+A=Clean B=Clean início=B,Aleatório,-498.1,0,498.1,251.43,0,250.47,498.1
+MÉDIA (8 estados),Reflexo simples,-989,,,,,,
+MÉDIA (8 estados),Tabela,9,,,,,,
+MÉDIA (8 estados),Baseado modelo,9,,,,,,
+MÉDIA (8 estados),Aleatório,-488.1,,,,,,

@@ -1,0 +1,5 @@
+agente,passo_1,passo_2,passo_3,passo_4,passo_5,passo_6,passo_7,passo_8
+Reflexo simples,A/Suck,A/Right,B/Suck,B/Left,A/Right,B/Left,A/Right,B/Left
+Tabela,A/Suck,A/Right,B/Suck,B/None,B/None,B/None,B/None,B/None
+Baseado modelo,A/Suck,A/Right,B/Suck,B/NoOp,B/NoOp,B/NoOp,B/NoOp,B/NoOp
+Aleatório,A/Suck,A/Left,A/Left,A/Left,A/Right,B/Right,B/NoOp,B/Right

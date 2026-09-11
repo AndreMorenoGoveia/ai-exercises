@@ -1,0 +1,88 @@
+AIMA - agente aspirador de pó: bateria de testes
+semente = 42, horizonte padrão = 1000 passos
+
+==============================================================================
+TESTE 0 - Doctests do AIMA para os agentes aspiradores
+==============================================================================
+  aima.agents.ModelBasedVacuumAgent              5 exemplo(s)  OK
+  aima.agents.RandomVacuumAgent                  5 exemplo(s)  OK
+  aima.agents.ReflexVacuumAgent                  5 exemplo(s)  OK
+  aima.agents.TableDrivenVacuumAgent             5 exemplo(s)  OK
+  aima.agents.compare_agents                     6 exemplo(s)  OK
+  total: 26 exemplos, 0 falhas
+
+==============================================================================
+EXPERIMENTO 1 - Desempenho nos 8 estados iniciais (1000 passos)
+==============================================================================
+estado inicial           agente  desemp. t_limpo    movs  sugadas  desperd.
+A=Dirty B=Dirty início=A Reflexo    -978.0       3   998.0      2.0     997.0
+A=Dirty B=Dirty início=A   Tabela     19.0       3     1.0      2.0       0.0
+A=Dirty B=Dirty início=A Baseado      19.0       3     1.0      2.0       0.0
+A=Dirty B=Dirty início=A Aleatóri   -478.1   13.97   498.1    251.4     491.3
+A=Dirty B=Dirty início=B Reflexo    -978.0       3   998.0      2.0     997.0
+A=Dirty B=Dirty início=B   Tabela     19.0       3     1.0      2.0       0.0
+A=Dirty B=Dirty início=B Baseado      19.0       3     1.0      2.0       0.0
+A=Dirty B=Dirty início=B Aleatóri   -478.1   13.37   498.1    251.4     491.5
+A=Dirty B=Clean início=A Reflexo    -989.0       1   999.0      1.0     999.0
+A=Dirty B=Clean início=A   Tabela      9.0       1     1.0      1.0       1.0
+A=Dirty B=Clean início=A Baseado       9.0       1     1.0      1.0       1.0
+A=Dirty B=Clean início=A Aleatóri   -488.1     3.7   498.1    251.4     496.7
+A=Dirty B=Clean início=B Reflexo    -989.0       2   999.0      1.0     998.0
+A=Dirty B=Clean início=B   Tabela      9.0       2     1.0      1.0       0.0
+A=Dirty B=Clean início=B Baseado       9.0       2     1.0      1.0       0.0
+A=Dirty B=Clean início=B Aleatóri   -488.1   8.733   498.1    251.4     493.7
+A=Clean B=Dirty início=A Reflexo    -989.0       2   999.0      1.0     998.0
+A=Clean B=Dirty início=A   Tabela      9.0       2     1.0      1.0       0.0
+A=Clean B=Dirty início=A Baseado       9.0       2     1.0      1.0       0.0
+A=Clean B=Dirty início=A Aleatóri   -488.1      13   498.1    251.4     491.8
+A=Clean B=Dirty início=B Reflexo    -989.0       1   999.0      1.0     999.0
+A=Clean B=Dirty início=B   Tabela      9.0       1     1.0      1.0       1.0
+A=Clean B=Dirty início=B Baseado       9.0       1     1.0      1.0       1.0
+A=Clean B=Dirty início=B Aleatóri   -488.1   7.367   498.1    251.4     494.9
+A=Clean B=Clean início=A Reflexo   -1000.0       0  1000.0      0.0    1000.0
+A=Clean B=Clean início=A   Tabela     -1.0       0     1.0      0.0       1.0
+A=Clean B=Clean início=A Baseado      -1.0       0     1.0      0.0       1.0
+A=Clean B=Clean início=A Aleatóri   -498.1       0   498.1    251.4     498.1
+A=Clean B=Clean início=B Reflexo   -1000.0       0  1000.0      0.0    1000.0
+A=Clean B=Clean início=B   Tabela     -1.0       0     1.0      0.0       1.0
+A=Clean B=Clean início=B Baseado      -1.0       0     1.0      0.0       1.0
+A=Clean B=Clean início=B Aleatóri   -498.1       0   498.1    251.4     498.1
+
+Média sobre os 8 estados iniciais:
+  Reflexo simples       -989.00
+  Tabela                   9.00
+  Baseado modelo           9.00
+  Aleatório             -488.10
+
+==============================================================================
+EXPERIMENTO 2 - Desempenho médio x horizonte de tempo
+==============================================================================
+agente                  t=5     t=10     t=50    t=100    t=500   t=1000
+Reflexo simples         6.0      1.0    -39.0    -89.0   -489.0   -989.0
+Tabela                  9.0      9.0      9.0      9.0      9.0      9.0
+Baseado modelo          9.0      9.0      9.0      9.0      9.0      9.0
+Aleatório               2.9      2.0    -15.6    -40.4   -238.5   -488.1
+
+==============================================================================
+EXPERIMENTO 3 - compare_agents() do AIMA: 50 ambientes sorteados
+==============================================================================
+  Reflexo simples    desempenho médio =  -990.32
+  Tabela             desempenho médio =     7.80
+  Baseado modelo     desempenho médio =     7.80
+  Aleatório          desempenho médio =  -488.04
+
+==============================================================================
+EXPERIMENTO 4 - Traço das 8 primeiras ações (A=Dirty, B=Dirty, início em A)
+==============================================================================
+  Reflexo simples    A/Suck -> A/Right -> B/Suck -> B/Left -> A/Right -> B/Left -> A/Right -> B/Left
+  Tabela             A/Suck -> A/Right -> B/Suck -> B/None -> B/None -> B/None -> B/None -> B/None
+  Baseado modelo     A/Suck -> A/Right -> B/Suck -> B/NoOp -> B/NoOp -> B/NoOp -> B/NoOp -> B/NoOp
+  Aleatório          A/Suck -> A/Left -> A/Left -> A/Left -> A/Right -> B/Right -> B/NoOp -> B/Right
+
+==============================================================================
+EXPERIMENTO 5 - Mesmo agente, outro PEAS: VacuumEnvironment 10x10, 10 sujeiras, 1000 passos
+==============================================================================
+  Reflexo simples (AIMA, feito p/ o mundo de 2 quadrados)  desempenho=  -1000.0  sujeiras limpas= 0.00/10
+  Reflexo 2D (escrito para este ambiente)                  desempenho=   -445.0  sujeiras limpas= 5.55/10
+
+CSVs gravados em: /home/andre/repos/ai-exercises/agente-aspirador/resultados

@@ -1,0 +1,5 @@
+agente,funcao_aima,desempenho_medio,n_ambientes,passos
+Reflexo simples,ReflexVacuumAgent,-990.32,50,1000
+Tabela,TableDrivenVacuumAgent,7.8,50,1000
+Baseado modelo,ModelBasedVacuumAgent,7.8,50,1000
+Aleatório,RandomVacuumAgent,-488.04,50,1000
