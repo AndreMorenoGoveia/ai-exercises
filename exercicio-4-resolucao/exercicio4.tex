@@ -1,0 +1,285 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,trees,positioning}
+\usepackage{hyperref}
+
+\geometry{
+  top=2cm,
+  bottom=2cm,
+  left=2cm,
+  right=2cm
+}
+
+\setlist{itemsep=2pt, topsep=2pt}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!70!black,
+  citecolor=blue!70!black,
+  urlcolor=blue!70!black
+}
+
+\title{\vspace{-1cm}\textbf{Exercício 4 --- Refutação por Resolução}\\
+\large Inteligência Artificial --- Lógica de Predicados de Primeira Ordem}
+\author{\textbf{André Moreno Goveia} \\ NUSP: 13682785}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\vspace{-0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\section*{Contextualização do Problema}
+
+Considere o seguinte conteúdo de uma base de conhecimento ($KB$):
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textit{Todo engenheiro que trabalha na Petrobrás terá estabilidade no emprego nos próximos 5 anos e será reconhecido nacionalmente por seu trabalho nos próximos 10 anos.}
+    \item \textit{Existe um engenheiro que trabalha na Petrobrás e será presidente do STF.}
+\end{enumerate}
+
+% ==============================================================================
+% ITEM A
+% ==============================================================================
+\section*{Item (a) --- Representação em Lógica de Predicados}
+
+\subsection*{1. Vocabulário, Predicados, Funções e Variáveis}
+
+\begin{itemize}
+    \item \textbf{Domínio do Discurso ($\mathcal{D}$):} Conjunto de pessoas (indivíduos).
+    \item \textbf{Predicados:}
+    \begin{itemize}
+        \item $E(x)$: ``$x$ é engenheiro''
+        \item $P(x)$: ``$x$ trabalha na Petrobrás''
+        \item $S(x)$: ``$x$ terá estabilidade no emprego nos próximos 5 anos''
+        \item $R(x)$: ``$x$ será reconhecido nacionalmente por seu trabalho nos próximos 10 anos''
+        \item $J(x)$: ``$x$ será presidente do STF''
+    \end{itemize}
+    \item \textbf{Variáveis:} $x, y \in \mathcal{D}$ (representam indivíduos arbitrários do domínio).
+    \item \textbf{Constantes e Funções:} Não há constantes nem funções primitivas na especificação inicial. A constante de Skolem $a$ surge da eliminação de quantificadores existenciais na etapa de conversão clausal.
+\end{itemize}
+
+\subsection*{2. Formalização das Sentenças da Base}
+
+\begin{itemize}
+    \item \textbf{Sentença 1 ($S_1$):}
+    \[
+    \forall x \, \Big( (E(x) \land P(x)) \to (S(x) \land R(x)) \Big)
+    \]
+    \item \textbf{Sentença 2 ($S_2$):}
+    \[
+    \exists x \, \Big( E(x) \land P(x) \land J(x) \Big)
+    \]
+\end{itemize}
+
+\subsection*{3. Conversão da Base ($KB$) para a Forma Normal Clausal (CNF)}
+
+\paragraph{Transformação de $S_1$:}
+\begin{enumerate}[label=\alph*)]
+    \item Eliminação da implicação ($A \to B \equiv \neg A \lor B$):
+    $\forall x \, \big( \neg(E(x) \land P(x)) \lor (S(x) \land R(x)) \big)$
+    \item Aplicação de De Morgan:
+    $\forall x \, \big( \neg E(x) \lor \neg P(x) \lor (S(x) \land R(x)) \big)$
+    \item Distributividade de $\lor$ sobre $\land$:
+    $\forall x \, \big( (\neg E(x) \lor \neg P(x) \lor S(x)) \land (\neg E(x) \lor \neg P(x) \lor R(x)) \big)$
+    \item Eliminação do quantificador universal $\forall$, obtendo duas cláusulas disjuntivas:
+    \begin{align*}
+        C_1: & \quad \neg E(x) \lor \neg P(x) \lor S(x) \\
+        C_2: & \quad \neg E(x) \lor \neg P(x) \lor R(x)
+    \end{align*}
+\end{enumerate}
+
+\paragraph{Transformação de $S_2$:}
+\begin{enumerate}[label=\alph*)]
+    \item Skolemização de $\exists x$ (introdução da constante de Skolem $a$):
+    $E(a) \land P(a) \land J(a)$
+    \item Separação em cláusulas unitárias:
+    \begin{align*}
+        C_3: & \quad E(a) \\
+        C_4: & \quad P(a) \\
+        C_5: & \quad J(a)
+    \end{align*}
+\end{enumerate}
+
+Portanto, o conjunto de cláusulas da base é:
+\[
+KB = \{ C_1, C_2, C_3, C_4, C_5 \}
+\]
+
+% ==============================================================================
+% ITEM B
+% ==============================================================================
+\section*{Item (b) --- Análise da Sentença 3 por Refutação}
+
+Deseja-se verificar se a seguinte sentença decorre logicamente da base:
+\begin{enumerate}
+    \item[\textbf{3.}] \textit{Todo engenheiro que trabalha na Petrobrás será reconhecido nacionalmente por seu trabalho nos próximos 10 anos e será presidente do STF.}
+\end{enumerate}
+
+\subsection*{1. Formalização da Meta ($\alpha$)}
+\[
+\alpha: \forall x \, \Big( (E(x) \land P(x)) \to (R(x) \land J(x)) \Big)
+\]
+
+\subsection*{2. Negação da Meta ($\neg \alpha$) e Clausalização}
+Pelo método de refutação por resolução, adiciona-se a negação da meta ($\neg \alpha$) a $KB$:
+\begin{align*}
+\neg \alpha & \equiv \neg \Big( \forall x \, \big( (E(x) \land P(x)) \to (R(x) \land J(x)) \big) \Big) \\
+& \equiv \exists x \, \neg \Big( \neg(E(x) \land P(x)) \lor (R(x) \land J(x)) \Big) \\
+& \equiv \exists x \, \Big( E(x) \land P(x) \land \neg(R(x) \land J(x)) \Big) \\
+& \equiv \exists x \, \Big( E(x) \land P(x) \land (\neg R(x) \lor \neg J(x)) \Big)
+\end{align*}
+
+Ao eliminar o quantificador existencial $\exists x$, devemos introduzir uma \textbf{nova constante de Skolem}, $b$ (com $b \neq a$), pois a Skolemização não permite reutilizar uma constante pré-existente sem perda de consistência semântica:
+\begin{align*}
+C_6: & \quad E(b) \\
+C_7: & \quad P(b) \\
+C_8: & \quad \neg R(b) \lor \neg J(b)
+\end{align*}
+
+\subsection*{3. Aplicação das Regras de Resolução}
+Buscamos derivar a cláusula vazia ($\square$) a partir de $KB \cup \{C_6, C_7, C_8\}$:
+\begin{enumerate}[label=\arabic*.]
+    \item Resolução de $C_2$ com $C_6$ (MGU $\theta_1 = \{x / b\}$):
+    \[
+    \mathrm{Res}(C_2, C_6) = \neg P(b) \lor R(b) \quad (C_9)
+    \]
+    \item Resolução de $C_9$ com $C_7$:
+    \[
+    \mathrm{Res}(C_9, C_7) = R(b) \quad (C_{10})
+    \]
+    \item Resolução de $C_8$ com $C_{10}$:
+    \[
+    \mathrm{Res}(C_8, C_{10}) = \neg J(b) \quad (C_{11})
+    \]
+\end{enumerate}
+
+Para obter a cláusula vazia ($\square$), o literal negativo $\neg J(b)$ precisaria resolver com o literal positivo $J(a)$ de $C_5$. Todavia:
+\[
+\mathrm{MGU}(J(b), J(a)) = \text{Falha (não unificam, pois $a$ e $b$ são constantes distintas)}.
+\]
+Nenhuma outra inferência gera literais complementares adicionais. O conjunto de cláusulas é estritamente consistente.
+
+\begin{tcolorbox}[colback=red!5!white,colframe=red!70!black,title=\textbf{Conclusão do Item (b)}]
+\textbf{A sentença 3 NÃO é consequência lógica da base de conhecimento ($KB \not\models \alpha$).} \\
+Não é possível derivar a contradição ($\square$). De fato, a base afirma apenas que \emph{existe algum} engenheiro que presidirá o STF, o que não autoriza concluir que \emph{todos} os engenheiros da Petrobrás alcançarão essa posição.
+\end{tcolorbox}
+
+% ==============================================================================
+% ITEM C
+% ==============================================================================
+\section*{Item (c) --- Demonstração da Sentença 4 por Refutação}
+
+Deseja-se verificar se a seguinte sentença decorre logicamente da base:
+\begin{enumerate}
+    \item[\textbf{4.}] \textit{Algum engenheiro que trabalha na Petrobrás será reconhecido nacionalmente por seu trabalho nos próximos 10 anos e será presidente do STF.}
+\end{enumerate}
+
+\subsection*{1. Formalização da Meta ($\beta$)}
+\[
+\beta: \exists x \, \Big( E(x) \land P(x) \land R(x) \land J(x) \Big)
+\]
+
+\subsection*{2. Negação da Meta ($\neg \beta$) e Clausalização}
+\begin{align*}
+\neg \beta & \equiv \neg \Big( \exists x \, (E(x) \land P(x) \land R(x) \land J(x)) \Big) \\
+& \equiv \forall x \, \Big( \neg E(x) \lor \neg P(x) \lor \neg R(x) \lor \neg J(x) \Big)
+\end{align*}
+
+Como a negação contém apenas um quantificador universal, na forma clausal o símbolo quantificado torna-se uma variável universalmente quantificada (variável livre). Padronizando com a variável $y$:
+\[
+C_6': \quad \neg E(y) \lor \neg P(y) \lor \neg R(y) \lor \neg J(y)
+\]
+
+\subsection*{3. Tabela de Resolução Passo a Passo}
+
+Aplicando o princípio da resolução ao conjunto $KB \cup \{C_6'\}$:
+
+\begin{center}
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{c l l c l}
+\toprule
+\textbf{Passo} & \textbf{Cláusula Pai 1} & \textbf{Cláusula Pai 2} & \textbf{MGU ($\theta$)} & \textbf{Resolvente Derivado} \\
+\midrule
+1 & $C_6'$ & $C_5: J(a)$ & $\{y / a\}$ & $C_7': \neg E(a) \lor \neg P(a) \lor \neg R(a)$ \\
+2 & $C_7'$ & $C_4: P(a)$ & $\emptyset$ & $C_8': \neg E(a) \lor \neg R(a)$ \\
+3 & $C_8'$ & $C_3: E(a)$ & $\emptyset$ & $C_9': \neg R(a)$ \\
+4 & $C_2: \neg E(x) \lor \neg P(x) \lor R(x)$ & $C_9'$ & $\{x / a\}$ & $C_{10}': \neg E(a) \lor \neg P(a)$ \\
+5 & $C_{10}'$ & $C_4: P(a)$ & $\emptyset$ & $C_{11}': \neg E(a)$ \\
+6 & $C_{11}'$ & $C_3: E(a)$ & $\emptyset$ & $C_{12}': \mathbf{\square} \quad \text{\textbf{(Cláusula Vazia)}}$ \\
+\bottomrule
+\end{tabular}%
+}
+\end{center}
+
+\subsection*{4. Árvore de Resolução por Refutação}
+
+\begin{center}
+\resizebox{0.88\linewidth}{!}{%
+\begin{tikzpicture}[
+  level distance=1.25cm,
+  sibling distance=4.2cm,
+  every node/.style={draw, rounded corners, fill=blue!5, font=\small, align=center, inner sep=4pt},
+  edge from parent/.style={draw, -{Latex[length=2mm]}}
+]
+\node[fill=red!15, very thick] {$\mathbf{\square}$ \textbf{(Contradição)}}
+  child {
+    node {$C_3: E(a)$}
+  }
+  child {
+    node {$C_{11}': \neg E(a)$}
+    child {
+      node {$C_4: P(a)$}
+    }
+    child {
+      node {$C_{10}': \neg E(a) \lor \neg P(a)$}
+      child {
+        node {$C_2: \neg E(x) \lor \neg P(x) \lor R(x)$}
+      }
+      child {
+        node {$C_9': \neg R(a)$}
+        child {
+          node {$C_3: E(a)$}
+        }
+        child {
+          node {$C_8': \neg E(a) \lor \neg R(a)$}
+          child {
+            node {$C_4: P(a)$}
+          }
+          child {
+            node {$C_7': \neg E(a) \lor \neg P(a) \lor \neg R(a)$}
+            child {
+              node {$C_5: J(a)$}
+            }
+            child {
+              node {$C_6': \neg E(y) \lor \neg P(y) \lor \neg R(y) \lor \neg J(y)$}
+            }
+          }
+        }
+      }
+    }
+  };
+\end{tikzpicture}%
+}
+\end{center}
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!60!black,title=\textbf{Conclusão do Item (c)}]
+\textbf{A sentença 4 É consequência lógica da base de conhecimento ($KB \models \beta$).} \\
+A cláusula vazia ($\square$) foi formalmente deduzida a partir de $KB \cup \{\neg \beta\}$. Como a refutação gerou contradição, a hipótese de falsidade de $\beta$ é insustentável. O engenheiro da Petrobrás cuja existência no STF é garantida pela Sentença 2 necessariamente usufrui de reconhecimento nacional em virtude da Sentença 1.
+\end{tcolorbox}
+
+\end{document}
